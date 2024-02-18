@@ -28,8 +28,12 @@ nano "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
 if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 	mkdir -p "${XDG_CONFIG_HOME}"/x11-calc
 	cat <<-EOF >"${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
-		# define emulator model to be run:
-		MODEL=35
+		# Define emulator model to be run:
+  		# Model number may be one of the following:
+                # 35, 80, 45, 70, 21, 22, 25, 25c, 27, 29c, 
+		# 31e, 32e, 33e, 33c, 34c, 37e, 38e, 38c, 67, 
+                # 10c, 11c, 12c, 15c, or 16c
+		MODEL=25c
 
 		# OPTS may contain options as one-liner string to specify:
 		# * preferred non-default save-state file path to be loaded
