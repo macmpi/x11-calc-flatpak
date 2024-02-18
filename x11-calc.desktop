@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
-Name=x11-calc
-Comment=HP calculator simulators
+Name=RPN Calculator
+Comment=An HP calculator emulator
 Exec=x11-calc-launcher.sh
 Type=Application
 Icon=io.github.mike632t.x11_calc
