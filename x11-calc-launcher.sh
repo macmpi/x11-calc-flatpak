@@ -49,8 +49,8 @@ CMD_OPTS="$@"
 if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 	mkdir -p "${XDG_CONFIG_HOME}"/x11-calc
 	cat <<-EOF >"${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
-		# Select which emulator run by settign the MODEL to one of 
-  		# the following:
+		# Select which emulator to run by setting the MODEL to one
+  		# of the following:
 		# 35, 80, 45, 70, 21, 22, 25, 25c, 27, 29c, 
 		# 31e, 32e, 33e, 33c, 34c, 37e, 38e, 38c, 67, 
 		# 10c, 11c, 12c, 15c, or 16c
