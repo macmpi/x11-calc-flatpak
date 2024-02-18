@@ -12,7 +12,7 @@ User can launch any of the project calculator simulator. Preferred calculator mo
 `flatpak run io.github.mike632t.x11_calc --setup`\
 or similarly editing:\
 `nano ~/.var/app/io.github.mike632t.x11_calc/config/x11-calc/x11-calc.conf`\
-(default is `MODEL=35`)
+(default is `MODEL=25c`)
 
 Voyager models (10c, 11c, 12c, 15c, 16c) can be used if relevant rom file is supplied at:\
 `~/.var/app/io.github.mike632t.x11_calc/data/x11-calc/$MODEL.rom`
