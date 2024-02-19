@@ -27,7 +27,6 @@ _launch() {
 # shellcheck disable=SC1090  # intended include
 . "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
 [ -z "$MODEL" ] && exit 1
-[ -n "$CMD_OPTS" ] && OPTS="$CMD_OPTS"
 
 case $MODEL in
 	10c|11c|12c|15c|16c)
@@ -36,6 +35,8 @@ case $MODEL in
 		[ -n "${OPTS##*.rom*}" ] || [ -z "${OPTS}" ] && OPTS="-r ${XDG_DATA_HOME}/x11-calc/${MODEL}.rom"
 	;;
 esac
+# eventual command-line options take precedence
+[ -n "$CMD_OPTS" ] && OPTS="$CMD_OPTS"
 
 # shellcheck disable=SC2086  # intended for parameter passsing
 exec /app/bin/x11-calc-${MODEL} ${OPTS}
@@ -50,9 +51,9 @@ if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 	mkdir -p "${XDG_CONFIG_HOME}"/x11-calc
 	cat <<-EOF >"${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
 		# Select which emulator to run by setting the MODEL to one
-  		# of the following:
-		# 35, 80, 45, 70, 21, 22, 25, 25c, 27, 29c, 
-		# 31e, 32e, 33e, 33c, 34c, 37e, 38e, 38c, 67, 
+		# of the following:
+		# 35, 80, 45, 70, 21, 22, 25, 25c, 27, 29c,
+		# 31e, 32e, 33e, 33c, 34c, 37e, 38e, 38c, 67,
 		# 10c, 11c, 12c, 15c, or 16c
 		MODEL=25c
 
@@ -61,12 +62,12 @@ if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 		#  (like sample prg presets from /app/share/x11-calc/prg/)
 		# # non-default .rom file path (-r prefix)
 		# # other debug options...
-		# For more list of options, run from command-line:
+		# For more complete list of options, run from command-line:
 		# flatpak run io.github.mike632t.x11_calc --help
 		# To test OPTS line and diagnose errors, run from command-line:
 		# flatpak run io.github.mike632t.x11_calc OPTS
 		OPTS=""
-		
+
 		# To call this setup again:
 		# flatpak run io.github.mike632t.x11_calc --setup
 		EOF
