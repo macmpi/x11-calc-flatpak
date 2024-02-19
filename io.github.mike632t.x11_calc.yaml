@@ -25,14 +25,11 @@ modules:
       - install -Dm644 src/x11-calc.svg /app/share/icons/hicolor/scalable/apps/$FLATPAK_ID.svg
       - install -Dm644 x11-calc.metainfo.xml /app/share/metainfo/$FLATPAK_ID.metainfo.xml
     sources:
-#      - type: git
-#        url: https://github.com/mike632t/x11-calc.git
-#        branch: stable
+      - type: git
+        url: https://github.com/mike632t/x11-calc.git
+        branch: stable
 #        tag: TBD
 #        commit: TBD
-      - type: archive
-        url: https://github.com/mike632t/x11-calc/archive/67a7f77a38259ca49d5cd168ac5ccf8c9c03bd6c.zip
-        sha256: 92f9b96e3e204dc344b5b73ad69eef36e2796e265df4078dce1268af8cd14056
       - type: file
         path: x11-calc-launcher.sh
       - type: file
