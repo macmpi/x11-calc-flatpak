@@ -1,11 +1,11 @@
-# Flatpak distribution packaging for [x-11-calc](https://github.com/mike632t/x11-calc) HP RPN calculator emulator
+# Flatpak packaging for [x-11-calc](https://github.com/mike632t/x11-calc) HP RPN calculator emulator
 
 Application icon should appear in launcher after install.\
 It can also be launched under terminal (to monitor eventual error messages):\
 `flatpak run io.github.mike632t.x11_calc`
 
 User can launch any of the project emulator.\
-Preferred calculator model name can be set by running in terminal:\
+Preferred calculator model name can be set right-clicking on application icon or running in terminal:\
 `flatpak run io.github.mike632t.x11_calc --setup`\
 or similarly editing:\
 `nano ~/.var/app/io.github.mike632t.x11_calc/config/x11-calc/x11-calc.conf`\

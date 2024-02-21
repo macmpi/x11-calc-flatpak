@@ -20,12 +20,12 @@
 
 
 MODEL=""
+DEFAULT_MODEL=25c
 OPTS=""
 CMD_OPTS=""
 
+
 _launch() {
-# shellcheck disable=SC1090  # intended include
-. "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
 [ -z "$MODEL" ] && exit 1
 
 case $MODEL in
@@ -42,11 +42,36 @@ esac
 exec /app/bin/x11-calc-${MODEL} ${OPTS}
 }
 
-_setup() {
-nano "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
+_gui_conf (){
+local model opts
+local models="35 80 45 70 21 22 25 25c 27 29c \
+	31e 32e 33e 33c 34c 37e 38e 38c 67 \
+	10c 11c 12c 15c 16c"
+
+# shellcheck disable=SC2086  # intended for listin models in dialog
+model=$(zenity --list --title="Calculator selection" \
+	--text="Choose preferred calculator model:" --column="HP models" $models \
+	--ok-label="Choose" --height=300 --width=225 2>/dev/null)
+
+opts=$(zenity --entry --title="Define eventual optional parameters" \
+	--text="OPTS line:" --entry-text="$OPTS" \
+	--ok-label="Set" --height=100 --width=300 2>/dev/null)
+
+[ -z "$model" ] && model=$DEFAULT_MODEL
+sed -i 's/^MODEL=.*/MODEL='"$model"'/' "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
+sed -i 's/^OPTS=.*/OPTS=\"'"$opts"'\"/' "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
 }
 
-CMD_OPTS="$@"
+_setup() {
+if command -v zenity >/dev/null 2>&1; then
+	_gui_conf
+else
+	nano "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
+fi
+}
+
+## Main
+
 if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 	mkdir -p "${XDG_CONFIG_HOME}"/x11-calc
 	cat <<-EOF >"${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
@@ -55,7 +80,7 @@ if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 		# 35, 80, 45, 70, 21, 22, 25, 25c, 27, 29c,
 		# 31e, 32e, 33e, 33c, 34c, 37e, 38e, 38c, 67,
 		# 10c, 11c, 12c, 15c, or 16c
-		MODEL=25c
+		MODEL=$DEFAULT_MODEL
 
 		# OPTS may contain options as one-liner string to specify:
 		# # preferred non-default save-state file path to be loaded
@@ -72,6 +97,9 @@ if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 		# flatpak run io.github.mike632t.x11_calc --setup
 		EOF
 fi
+# shellcheck disable=SC1090  # intended include
+. "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
+CMD_OPTS="$*"
 
 case $CMD_OPTS in
 	--setup)
