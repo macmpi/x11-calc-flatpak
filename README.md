@@ -24,5 +24,5 @@ Test install:\
 `flatpak-builder --user --install --force-clean build-dir io.github.mike632t.x11_calc.yaml`
 
 Once ready, extract side-loadable `x11-calc.flatpak` package for later distribution:\
-`flatpak build-bundle ~/.local/share/flatpak/repo x11-calc.flatpak io.github.mike632t.x11_calc master`
+`flatpak build-bundle ~/.local/share/flatpak/repo x11-calc.flatpak io.github.mike632t.x11_calc`
 
