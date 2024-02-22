@@ -48,12 +48,12 @@ local models="35 80 45 70 21 22 25 25c 27 29c \
 	31e 32e 33e 33c 34c 37e 38e 38c 67 \
 	10c 11c 12c 15c 16c"
 
-# shellcheck disable=SC2086  # intended for listin models in dialog
+# shellcheck disable=SC2086  # intended for listing models in dialog
 model=$(zenity --list --title="Calculator selection" \
-	--text="Choose preferred calculator model:" --column="HP models" $models \
-	--ok-label="Choose" --height=300 --width=225 2>/dev/null)
+	--text="Choose preferred calculator model:" --column="HP model" $models \
+	--ok-label="OK" --height=300 --width=225 2>/dev/null)
 
-opts=$(zenity --entry --title="Define eventual optional parameters" \
+opts=$(zenity --entry --title="Expert settings: optional arguments" \
 	--text="OPTS line:" --entry-text="$OPTS" \
 	--ok-label="Set" --height=100 --width=300 2>/dev/null)
 
@@ -68,6 +68,10 @@ if command -v zenity >/dev/null 2>&1; then
 else
 	nano "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
 fi
+# reload modified settings to prep upcoming launch
+# shellcheck disable=SC1090  # intended include
+. "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
+CMD_OPTS=""
 }
 
 ## Main
@@ -101,12 +105,6 @@ fi
 . "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf
 CMD_OPTS="$*"
 
-case $CMD_OPTS in
-	--setup)
-		_setup
-	;;
-	*)
-		_launch
-	;;
-esac
+[ "$CMD_OPTS" = "--setup" ] && _setup
+_launch
 
