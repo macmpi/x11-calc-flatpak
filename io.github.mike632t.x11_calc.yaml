@@ -8,6 +8,15 @@ finish-args:
 - --socket=x11
 - --device=dri
 modules:
+  - name: x11-calc-fonts
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 Urbanist-Black.ttf -t /app/share/fonts/
+    sources:
+      - type: file
+        url: https://raw.githubusercontent.com/coreyhu/Urbanist/main/fonts/ttf/Urbanist-Black.ttf
+        sha256: 9fd48bb7ef6c1f8e3f2d6051838056f7a8891e734b7ad8e7e5c15b310ba61b48
+
   - name: x11-calc
     buildsystem: autotools
     no-autogen: true
@@ -27,8 +36,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/mike632t/x11-calc.git
-        tag: v0.11.0122
-        commit: c25dd22d5ef083a035525453039e277869aee7e2
+        tag: v0.12.0124
+        commit: bae5b8669bb29a6e0efd95c4ab3983a650d4c9ad
         x-checker-data:
           type: git
           tag-pattern: "^v([\\d.]+)$"
