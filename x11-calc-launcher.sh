@@ -18,6 +18,12 @@
 # You should have received a copy of the GNU General Public License along
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 
+ENOENT=2
+EBFONT=59
+ENODATA=61
+
+: "${XDG_CONFIG_HOME:="$HOME/.config"}"
+: "${XDG_DATA_HOME:="$HOME/.local/share"}"
 
 MODEL=""
 DEFAULT_MODEL=25c
@@ -26,6 +32,8 @@ CMD_OPTS=""
 
 
 _launch() {
+local fonts err
+
 [ -z "$MODEL" ] && exit 1
 
 case $MODEL in
@@ -39,7 +47,23 @@ esac
 [ -n "$CMD_OPTS" ] && OPTS="$CMD_OPTS"
 
 # shellcheck disable=SC2086  # intended for parameter passsing
-exec /app/bin/x11-calc-${MODEL} ${OPTS}
+"$(dirname "${0}")"/x11-calc-${MODEL} ${OPTS}
+err=$?
+case $err in
+	$EBFONT)
+		fonts="<i>xfonts-base</i> or equivalent for this distribution."
+		grep -qE "ubuntu|debian" /run/host/os-release && fonts="<i>xfonts-base</i>"
+		grep -qE "fedora" /run/host/os-release && fonts="<i>xorg-x11-fonts-base</i> or <i>xorg-x11-fonts-misc</i>"
+		grep -qE "gentoo" /run/host/os-release && fonts="<i>font-misc-misc</i>"
+		zenity --height=100 --width=300 --info --text="Please install the following font package:\n${fonts}"
+		;;
+	$ENOENT)
+		zenity --height=100 --width=450 --info --text="Missing .rom file !\nCorrect OPTS path, or copy file in defined location:\n${OPTS}"
+		;;
+	$ENODATA)
+		zenity --height=100 --width=200 --info --text="Empty .rom file !"
+		;;
+esac
 }
 
 _gui_conf (){
@@ -91,14 +115,14 @@ if ! [ -f "${XDG_CONFIG_HOME}"/x11-calc/x11-calc.conf ]; then
 		#  (like sample prg presets from /app/share/x11-calc/prg/)
 		# # non-default .rom file path (-r prefix)
 		# # other debug options...
-		# For more complete list of options, run from command-line:
-		# flatpak run io.github.mike632t.x11_calc --help
-		# To test OPTS line and diagnose errors, run from command-line:
-		# flatpak run io.github.mike632t.x11_calc OPTS
+		# For more complete list of options, run from command-line
+		# with --help option
+		# To test OPTS line and diagnose errors, run from command-line
+		# with OPTS line
 		OPTS=""
 
-		# To call this setup again:
-		# flatpak run io.github.mike632t.x11_calc --setup
+		# To call this setup again, run from command-line
+		# with --setup option
 		EOF
 fi
 # shellcheck disable=SC1090  # intended include
