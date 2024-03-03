@@ -66,7 +66,7 @@ case $err in
 esac
 }
 
-_gui_conf (){
+_gui_conf() {
 local model opts
 local models="35 80 45 70 21 22 25 25c 27 29c \
 	31e 32e 33e 33c 34c 37e 38e 38c 67 \
