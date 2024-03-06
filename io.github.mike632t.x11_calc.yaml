@@ -2,31 +2,19 @@ id: io.github.mike632t.x11_calc
 runtime: org.freedesktop.Platform
 runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
-command: x11-calc-launcher.sh
+command: x11-calc.sh
 finish-args:
 - --share=ipc
 - --socket=x11
-- --device=dri
+#- --device=dri
 modules:
-  - name: x11-calc-fonts
+  - name: x11-calc
     buildsystem: simple
     build-commands:
-      - install -Dm644 Urbanist-Black.ttf -t /app/share/fonts/
-    sources:
-      - type: file
-        url: https://raw.githubusercontent.com/coreyhu/Urbanist/main/fonts/ttf/Urbanist-Black.ttf
-        sha256: 9fd48bb7ef6c1f8e3f2d6051838056f7a8891e734b7ad8e7e5c15b310ba61b48
-
-  - name: x11-calc
-    buildsystem: autotools
-    no-autogen: true
-    make-args:
-      - clean
-      - all
-    no-parallel-make: true
-    no-make-install: true
+      - ./make.sh
     post-install:
-      - install -Dm755 x11-calc-launcher.sh /app/bin/x11-calc-launcher.sh
+#      - install -Dm755 x11-calc.sh /app/bin/x11-calc.sh
+      - install -dm755 /app/bin/
       - install -m755 bin/* /app/bin/
       - install -dm755 /app/share/x11-calc/prg
       - install -m644 prg/* /app/share/x11-calc/prg
@@ -36,16 +24,17 @@ modules:
     sources:
       - type: git
         url: https://github.com/mike632t/x11-calc.git
-        tag: v0.12.0124
-        commit: bae5b8669bb29a6e0efd95c4ab3983a650d4c9ad
+        branch: testing
+#        tag: v0.12.0124
+#        commit: bae5b8669bb29a6e0efd95c4ab3983a650d4c9ad
         x-checker-data:
           type: git
           tag-pattern: "^v([\\d.]+)$"
           version-scheme: semantic
       - type: file
-        path: x11-calc-launcher.sh
-      - type: file
         path: x11-calc.desktop
       - type: file
         path: x11-calc.metainfo.xml
+#      - type: file
+#        path: x11-calc.sh
 
