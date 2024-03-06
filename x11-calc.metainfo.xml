@@ -36,17 +36,17 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/mike632t/x11-calc/stable/img/x11-calc-25.png</image>
+      <image>https://raw.githubusercontent.com/mike632t/x11-calc/v0.12.0133/img/x11-calc-25.png</image>
       <caption>HP 25c</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/mike632t/x11-calc/stable/img/x11-calc-11c.png</image>
+      <image>https://raw.githubusercontent.com/mike632t/x11-calc/v0.12.0133/img/x11-calc-11c.png</image>
       <caption>HP 11c</caption>
     </screenshot>
   </screenshots>
 
   <releases>
-  <release version="0.12.0124" date="2024-02-25">
+  <release version="0.12.0133" date="2024-03-06">
     <description>
       <p>Initial release</p>
     </description>
